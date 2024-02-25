@@ -2,8 +2,7 @@
   "name": "alpine-query",
   "version": "0.0.1",
   "description": "",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/orthanc/alpine-query.git"
@@ -19,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/orthanc/alpine-query/issues"
   },
-  "homepage": "https://github.com/orthanc/alpine-query#readme"
+  "homepage": "https://github.com/orthanc/alpine-query#readme",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
 }
