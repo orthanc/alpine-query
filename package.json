@@ -1,0 +1,23 @@
+{
+  "name": "alpine-query",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orthanc/alpine-query.git"
+  },
+  "keywords": [
+    "alpine.js",
+    "query",
+    "fetch",
+    "alpine"
+  ],
+  "author": "orthanc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orthanc/alpine-query/issues"
+  },
+  "homepage": "https://github.com/orthanc/alpine-query#readme"
+}
