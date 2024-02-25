@@ -32,5 +32,9 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@tanstack/query-core": "^5.24.1",
+    "wretch": "^2.8.0"
   }
 }
