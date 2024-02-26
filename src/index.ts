@@ -15,6 +15,7 @@ declare global {
 }
 
 const queryClient = new QueryClient();
+const wretch = w();
 
 const query = <
   TQueryFnData,
@@ -79,9 +80,6 @@ document.addEventListener('alpine:init', () => {
       { value: variable = 'query', expression },
       { Alpine, evaluateLater, effect, cleanup }
     ) => {
-      // console.log({ variable });
-      // @ts-expect-error
-      // Alpine.$data(el)[variable] = {};
       const getQuery = evaluateLater(expression);
 
       let updateOptions: undefined | ((options: QueryObserverOptions) => void) =
@@ -94,7 +92,7 @@ document.addEventListener('alpine:init', () => {
       effect(() =>
         getQuery((url: string) => {
           const options: QueryObserverOptions = {
-            queryFn: () => w().get(url).json(),
+            queryFn: () => wretch.get(url).json(),
             queryKey: [url],
           };
           if (updateOptions == null) {
