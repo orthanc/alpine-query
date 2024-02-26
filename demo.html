@@ -7,9 +7,26 @@
     <script defer src="./dist/index.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
   </head>
-  <body>
-    <div x-data="{url: 'https://api.github.com/repos/tannerlinsley/react-query'}" x-query:query="url">
-      <strong x-text="JSON.stringify({status: query.status, fetchStatus: query.fetchStatus, data: query.data, error: query.error})"></strong>
+  <body x-data="{
+    queryClient: $queryClient(),
+    wretch: $wretch()
+  }">
+    <div x-data="{url: 'https://api.github.com/repos/tannerlinsley/react-query'}" x-query:query="$get(url)">
+      <div x-show="query.isLoading">Loading...</div>
+      <div x-show="query.error">An error has occurred: <span x-text="query.error && query.error.message"></span></div>
+        <div x-show="query.data" x-data="{
+          get data() {
+            return this.query.data == null ? {} : this.query.data;
+          }
+        }">
+          <h1 x-text="data.name"></h1>
+          <p x-text="data.description"></p>
+          <strong>👀 <span x-text="data.subscribers_count"></span></strong>
+          <strong>✨ <span x-text="data.stargazers_count"></span></strong>
+          <strong>🍴 <span x-text="data.forks_count"></span></strong>
+          <div x-show="query.isFetching">Updating...</div>
+          <ReactQueryDevtools initialIsOpen />
+        </div>
     </div>
   </body>
 </html> 
