@@ -123,7 +123,7 @@ document.addEventListener('alpine:init', () => {
         }
         return chain.post().text();
       },
-      queryKey: [url],
+      queryKey: [url, body],
       ...queryOptions,
     });
   });
