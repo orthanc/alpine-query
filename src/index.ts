@@ -78,7 +78,13 @@ const query = <
 document.addEventListener('alpine:init', () => {
   window.Alpine.magic(
     'queryClient',
-    () => (config?: QueryClientConfig) => new QueryClient(config)
+    (_, { cleanup }) =>
+      (config?: QueryClientConfig) => {
+        const client = new QueryClient(config);
+        client.mount();
+        cleanup(() => client.unmount());
+        return client;
+      }
   );
   window.Alpine.magic(
     'wretch',
