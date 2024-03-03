@@ -76,16 +76,22 @@ const query = <
 };
 
 document.addEventListener('alpine:init', () => {
-  window.Alpine.magic(
-    'queryClient',
-    (_, { cleanup }) =>
-      (config?: QueryClientConfig) => {
-        const client = new QueryClient(config);
-        client.mount();
-        cleanup(() => client.unmount());
-        return client;
-      }
+  window.Alpine.magic('queryClient', (_, { Alpine, evaluate }) => {
+    const queryClient = Alpine.raw(evaluate('__queryClient')) as QueryClient;
+    return queryClient;
+  });
+
+  window.Alpine.directive(
+    'query-client',
+    (el, { expression }, { Alpine, evaluate, cleanup }) => {
+      const client = new QueryClient(evaluate(expression) as QueryClientConfig);
+      client.mount();
+      cleanup(() => client.unmount());
+      // @ts-expect-error alpine data doesn't seem like something I can type
+      Alpine.$data(el).__queryClient = client;
+    }
   );
+
   window.Alpine.magic(
     'wretch',
     () => (baseUrl?: string, options?: RequestInit) => w(baseUrl, options)
@@ -134,7 +140,7 @@ document.addEventListener('alpine:init', () => {
       { value: variable = 'query', expression },
       { Alpine, evaluate, evaluateLater, effect, cleanup }
     ) => {
-      const queryClient = Alpine.raw(evaluate('queryClient')) as QueryClient;
+      const queryClient = Alpine.raw(evaluate('__queryClient')) as QueryClient;
       if (queryClient == null) {
         throw new Error(
           'No query client is set, you must have x-data="{queryClient: $queryClient()}" as a parent before use of x-query'
